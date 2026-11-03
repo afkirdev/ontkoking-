@@ -64,7 +64,8 @@
     display: block;
     padding: 8px 4px;
     text-align: center;
-    font-size: 13px;
+    font-size: 0.9375rem;
+    font-weight: 700;
     color: #9b351e;
     text-decoration: none;
 }
@@ -133,6 +134,6 @@
     .recept-acties a {
         min-height: 44px;
         padding: 14px 2px;
-        font-size: 12px;
+        font-size: 0.9375rem;
     }
 }
