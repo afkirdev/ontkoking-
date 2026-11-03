@@ -15,11 +15,12 @@
     <div class="page-body">
 
     <div class="hero">
-            <select id="options">
-                <option value="First">First</option>
-                <option value="Second">Second</option>
-                <option value="Third">Third</option>
-            </select>
+        <select id="options">
+            <option value="">Alles</option>
+            <option value="Ontbijt" <?= $filter == 'Ontbijt' ? 'selected' : '' ?>>Ontbijt</option>
+            <option value="Lunch" <?= $filter == 'Lunch' ? 'selected' : '' ?>>Lunch</option>
+            <option value="Avondeten" <?= $filter == 'Avondeten' ? 'selected' : '' ?>>Avondeten</option>
+        </select>
     </div>
 
     <!--de eerste 4 recepten-->

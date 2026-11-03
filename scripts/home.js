@@ -7,6 +7,15 @@ menuButton.addEventListener('click', () => {
     menuButton.setAttribute('aria-expanded', String(isOpen));
 });
 
+const options = document.getElementById('options');
+
+if (options) {
+    options.addEventListener('change', function() {
+        const selectedOption = this.value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('filter', selectedOption);
+        window.location.href = url.toString();
+    });
 const muziek = document.getElementById('achtergrondmuziek');
 const muziekKnop = document.getElementById('muziekKnop');
 
