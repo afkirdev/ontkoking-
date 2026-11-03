@@ -66,6 +66,7 @@ if (muziek && muziekKnop) {
         speelMuziek();
     }
 }
+}
 
 document.addEventListener('click', (event) => {
     if (!navMenu.contains(event.target) && !menuButton.contains(event.target)) {
