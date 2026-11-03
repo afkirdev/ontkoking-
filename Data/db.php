@@ -2,7 +2,6 @@
 session_start();
 
 // maakt de database aan als hij nog niet bestaat
-$nieuw = !file_exists(__DIR__ . '/ontkoking.db');
 $db = new PDO('sqlite:' . __DIR__ . '/ontkoking.db');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -13,9 +12,11 @@ $db->exec('PRAGMA foreign_keys = ON');
 // de tabellen uit het ERD
 // koppeltabellen (veel-op-veel) hebben een gecombineerde sleutel, geen eigen id
 // SQLite kent geen ENUM, daarom een CHECK met de keuzes
-if ($nieuw) {
+if ((int)$db->query('PRAGMA user_version')->fetchColumn() < 1) {
+    $db->beginTransaction();
+    try {
     $db->exec(<<<'SQL'
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id             INTEGER PRIMARY KEY AUTOINCREMENT,
   gebruikersnaam VARCHAR(50)  NOT NULL UNIQUE,
   wachtwoord     VARCHAR(255) NOT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE users (
   aangemaakt     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE recepten (
+CREATE TABLE IF NOT EXISTS recepten (
   id             INTEGER PRIMARY KEY AUTOINCREMENT,
   titel          VARCHAR(100) NOT NULL,
   beschrijving   TEXT,
@@ -37,12 +38,12 @@ CREATE TABLE recepten (
   bijgewerkt     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE ingredienten (
+CREATE TABLE IF NOT EXISTS ingredienten (
   id   INTEGER PRIMARY KEY AUTOINCREMENT,
   naam VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE recept_ingredienten (
+CREATE TABLE IF NOT EXISTS recept_ingredienten (
   recept_id     INTEGER NOT NULL REFERENCES recepten(id) ON DELETE CASCADE,
   ingredient_id INTEGER NOT NULL REFERENCES ingredienten(id),
   hoeveelheid   VARCHAR(20),
@@ -51,18 +52,18 @@ CREATE TABLE recept_ingredienten (
   PRIMARY KEY (recept_id, ingredient_id)
 );
 
-CREATE TABLE categorieen (
+CREATE TABLE IF NOT EXISTS categorieen (
   id   INTEGER PRIMARY KEY AUTOINCREMENT,
   naam VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE recept_categorieen (
+CREATE TABLE IF NOT EXISTS recept_categorieen (
   recept_id    INTEGER NOT NULL REFERENCES recepten(id) ON DELETE CASCADE,
   categorie_id INTEGER NOT NULL REFERENCES categorieen(id) ON DELETE CASCADE,
   PRIMARY KEY (recept_id, categorie_id)
 );
 
-CREATE TABLE reacties (
+CREATE TABLE IF NOT EXISTS reacties (
   id         INTEGER PRIMARY KEY AUTOINCREMENT,
   recept_id  INTEGER     NOT NULL REFERENCES recepten(id) ON DELETE CASCADE,
   user_id    INTEGER     NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -71,7 +72,7 @@ CREATE TABLE reacties (
   aangemaakt DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE recept_stemmen (
+CREATE TABLE IF NOT EXISTS recept_stemmen (
   recept_id  INTEGER    NOT NULL REFERENCES recepten(id) ON DELETE CASCADE,
   user_id    INTEGER    NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   stem       VARCHAR(6) NOT NULL CHECK (stem IN ('omhoog', 'omlaag')),
@@ -79,8 +80,61 @@ CREATE TABLE recept_stemmen (
   PRIMARY KEY (recept_id, user_id)
 );
 
-INSERT INTO categorieen (naam) VALUES ('Ontbijt'), ('Lunch'), ('Avondeten');
+INSERT OR IGNORE INTO categorieen (naam) VALUES ('Ontbijt'), ('Lunch'), ('Avondeten');
 SQL);
+
+        // Bestaande databases uitbreiden zonder accounts of recepten te verwijderen.
+        $aanvullingen = [
+            'users' => [
+                'rol' => "VARCHAR(10) NOT NULL DEFAULT 'gebruiker'",
+                'aangemaakt' => 'DATETIME',
+            ],
+            'recepten' => [
+                'beschrijving' => 'TEXT',
+                'bereidingstijd' => 'INTEGER',
+                'status' => "VARCHAR(15) NOT NULL DEFAULT 'gepubliceerd'",
+                'bijgewerkt' => 'DATETIME',
+            ],
+        ];
+        foreach ($aanvullingen as $tabel => $kolommen) {
+            $bestaand = $db->query("PRAGMA table_info($tabel)")->fetchAll(PDO::FETCH_COLUMN, 1);
+            foreach ($kolommen as $naam => $definitie) {
+                if (!in_array($naam, $bestaand, true)) {
+                    $db->exec("ALTER TABLE $tabel ADD COLUMN $naam $definitie");
+                }
+            }
+        }
+        $db->exec('UPDATE users SET aangemaakt = CURRENT_TIMESTAMP WHERE aangemaakt IS NULL');
+        $db->exec('UPDATE recepten SET bijgewerkt = aangemaakt WHERE bijgewerkt IS NULL');
+
+        $oudeKolommen = $db->query('PRAGMA table_info(recepten)')->fetchAll(PDO::FETCH_COLUMN, 1);
+        if (in_array('maaltijd', $oudeKolommen, true)) {
+            $db->exec('INSERT OR IGNORE INTO recept_categorieen (recept_id, categorie_id)
+                       SELECT recepten.id, categorieen.id FROM recepten
+                       JOIN categorieen ON LOWER(TRIM(recepten.maaltijd)) = LOWER(categorieen.naam)');
+        }
+        if (in_array('ingredienten', $oudeKolommen, true)) {
+            $voegIngredientToe = $db->prepare('INSERT OR IGNORE INTO ingredienten (naam) VALUES (?)');
+            $zoekIngredient = $db->prepare('SELECT id FROM ingredienten WHERE naam = ?');
+            $koppelIngredient = $db->prepare('INSERT OR IGNORE INTO recept_ingredienten
+                (recept_id, ingredient_id, hoeveelheid, eenheid, positie) VALUES (?, ?, ?, ?, ?)');
+            foreach ($db->query('SELECT id, ingredienten FROM recepten')->fetchAll() as $recept) {
+                foreach (explode("\n", $recept['ingredienten'] ?? '') as $positie => $regel) {
+                    $delen = array_map('trim', explode('|', $regel));
+                    [$hoeveelheid, $eenheid, $naam] = count($delen) === 3 ? $delen : ['', '', trim($regel)];
+                    if ($naam === '') continue;
+                    $voegIngredientToe->execute([$naam]);
+                    $zoekIngredient->execute([$naam]);
+                    $koppelIngredient->execute([$recept['id'], $zoekIngredient->fetchColumn(), $hoeveelheid, $eenheid, $positie + 1]);
+                }
+            }
+        }
+        $db->exec('PRAGMA user_version = 1');
+        $db->commit();
+    } catch (Throwable $fout) {
+        $db->rollBack();
+        throw $fout;
+    }
 }
 
 function e($tekst) {
