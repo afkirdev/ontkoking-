@@ -28,8 +28,20 @@ if ($id == '') {
     $id = $db->lastInsertId();
 } else {
     // recept bewerken alleen je eigen recepten
-    $stmt = $db->prepare('UPDATE recepten SET titel = ?, blog = ?, bijgewerkt = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?');
-    $stmt->execute([$titel, $blog, $id, $_SESSION['user_id']]);
+
+    $userStmt = $db->prepare('SELECT rol FROM users WHERE id = ?');
+    $userStmt->execute([$_SESSION['user_id']]);
+    $isAdmin = $userStmt->fetchColumn() === 'admin';
+
+    if ($isAdmin) {
+        $stmt = $db->prepare('UPDATE recepten SET titel = ?, blog = ?, bijgewerkt = CURRENT_TIMESTAMP WHERE id = ?');
+        $stmt->execute([$titel, $blog, $id]);
+    } else {
+        $stmt = $db->prepare('UPDATE recepten SET titel = ?, blog = ?, bijgewerkt = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?');
+        $stmt->execute([$titel, $blog, $id, $_SESSION['user_id']]);
+    }
+
+
 
     // niks aangepast betekent dat het niet jouw recept is
     if ($stmt->rowCount() == 0) {

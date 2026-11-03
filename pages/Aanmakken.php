@@ -5,8 +5,19 @@ moetInloggen();
 // als er een id is dan bewerk je een recept, anders maak je een nieuwe
 $recept = ['id' => '', 'titel' => '', 'ingredienten' => '', 'blog' => '', 'maaltijd' => ''];
 if (!empty($_GET['id'])) {
-    $stmt = $db->prepare('SELECT * FROM recepten WHERE id = ? AND user_id = ?');
-    $stmt->execute([$_GET['id'], $_SESSION['user_id']]);
+    $userStmt = $db->prepare('SELECT rol FROM users WHERE id = ?');
+    $userStmt->execute([$_SESSION['user_id']]);
+
+    $isAdmin = $userStmt->fetchColumn() === 'admin';
+
+    if ($isAdmin) {
+        $stmt = $db->prepare('SELECT * FROM recepten WHERE id = ?');
+        $stmt->execute([$_GET['id']]);
+    } else {
+        $stmt = $db->prepare('SELECT * FROM recepten WHERE id = ? AND user_id = ?');
+        $stmt->execute([$_GET['id'], $_SESSION['user_id']]);
+    }
+
     $recept = $stmt->fetch();
     if (!$recept) {
         header('Location: ReceptOverzicht.php');

@@ -19,7 +19,7 @@ CREATE TABLE users (
   id             INTEGER PRIMARY KEY AUTOINCREMENT,
   gebruikersnaam VARCHAR(50)  NOT NULL UNIQUE,
   wachtwoord     VARCHAR(255) NOT NULL,
-  rol            VARCHAR(10)  NOT NULL DEFAULT 'gebruiker' CHECK (rol IN ('gebruiker', 'moderator', 'admin')),
+  rol            VARCHAR(10)  NOT NULL DEFAULT 'gebruiker' CHECK (rol IN ('gebruiker', 'admin')),
   aangemaakt     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
