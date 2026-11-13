@@ -33,11 +33,11 @@
         <?php endforeach; ?>
 
         <?php if (!$recepten): ?>
-        <p class="lege-recepten">Je hebt nog geen recepten. Maak je eerste blog aan!</p>
+        <p class="lege-recepten">Je hebt nog geen recepten. Deel je eerste recept!</p>
         <?php endif; ?>
 
         <a class="recept-toevoegen" href="Aanmakken.php">
-            <span>Maak een nieuwe blog</span>
+            <span>Deel een nieuw recept</span>
             <span class="toevoegen-plus" aria-hidden="true">+</span>
         </a>
     </main>

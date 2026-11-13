@@ -1,49 +1,32 @@
-/* Ruimte voor recepttekst, labels en uploads op elk scherm. */
-.page-body > form {
-    width: min(100% - 32px, 1100px);
+.recept-formulier {
+    width: min(100% - 32px, 1000px);
     margin: 48px auto;
-    padding: clamp(20px, 4vw, 40px);
-    border: 1px solid rgba(101, 27, 22, 0.12);
-    border-radius: 18px;
+    padding: clamp(20px, 4vw, 48px);
     background: #fffaf0;
-    font-weight: 700;
+    border: 1px solid #cfad8d;
+    border-radius: 12px;
 }
-
-.page-body > form #grid2 {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr);
-    align-items: start;
-    margin: 24px 0;
-    text-align: left;
+.recept-formulier h1 { max-width: 19ch; }
+.recept-formulier > p { max-width: 55ch; }
+.recept-form-rij {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
 }
-
-.page-body > form textarea {
-    display: block;
-    width: 100%;
-    height: 320px;
-    margin: 8px 0 20px;
-    font-weight: 400;
+.recept-form-rij > div { min-width: 0; }
+.recept-teksten { margin-top: 24px; }
+.recept-teksten textarea { min-height: 280px; margin-top: 10px; }
+.foto-keuze {
+    margin: 28px 0 0;
+    padding: 20px;
+    border: 1px dashed #b58e74;
+    border-radius: 8px;
 }
-
-.page-body > form input[type="text"] {
-    width: 100%;
-    margin-bottom: 20px;
-    font-family: var(--font-kop);
-    font-size: 1.5rem;
-}
-
-.page-body > form input[type="file"] {
-    width: 100%;
-    font-size: 0.875rem;
-    font-weight: 400;
-}
-
-.maaltijd-keuze label {
-    display: block;
-    margin-bottom: 8px;
-}
-
-@media (max-width: 800px) {
-    .page-body > form #grid2 {
-        grid-template-columns: minmax(0, 1fr);
-    }
+.foto-keuze legend { padding: 0 8px; font-weight: 700; }
+.foto-keuze input { font-size: 0.875rem; }
+.upload-preview { display: block; width: 120px; height: 90px; object-fit: cover; border-radius: 6px; margin: 8px 0; }
+.formulier-acties { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 28px; }
+@media (max-width: 600px) {
+    .recept-form-rij { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .recept-formulier { margin: 24px auto; }
 }

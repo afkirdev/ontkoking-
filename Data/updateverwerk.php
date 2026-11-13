@@ -7,6 +7,13 @@ $titel = trim($_POST['titel'] ?? '');
 $ingredienten = trim($_POST['ingredienten'] ?? '');
 $blog = trim($_POST['blog'] ?? '');
 $maaltijd = $_POST['maaltijd'] ?? '';
+$beschrijving = trim($_POST['beschrijving'] ?? '');
+$tijdInvoer = $_POST['bereidingstijd'] ?? '';
+$bereidingstijd = $tijdInvoer === '' ? null : filter_var($tijdInvoer, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 1440]]);
+if ($bereidingstijd === false || strlen($titel) > 400 || $ingredienten === '' || $blog === '') {
+    http_response_code(400);
+    exit('Vul een titel, ingrediënten en bereiding in. Gebruik voor de tijd een aantal minuten tussen 1 en 1440. Ga terug om je recept aan te passen.');
+}
 
 if (!in_array($maaltijd, ['ontbijt', 'lunch', 'avondeten'], true)) {
     http_response_code(400);
@@ -23,8 +30,8 @@ $foto2 = uploadFoto('picture2');
 
 if ($id == '') {
     // nieuw recept
-    $stmt = $db->prepare('INSERT INTO recepten (titel, blog, foto, foto2, user_id) VALUES (?, ?, ?, ?, ?)');
-    $stmt->execute([$titel, $blog, $foto, $foto2, $_SESSION['user_id']]);
+    $stmt = $db->prepare('INSERT INTO recepten (titel, blog, foto, foto2, user_id, beschrijving, bereidingstijd) VALUES (?, ?, ?, ?, ?, ?, ?)');
+    $stmt->execute([$titel, $blog, $foto, $foto2, $_SESSION['user_id'], $beschrijving, $bereidingstijd]);
     $id = $db->lastInsertId();
 } else {
     // recept bewerken alleen je eigen recepten
@@ -34,11 +41,11 @@ if ($id == '') {
     $isAdmin = $userStmt->fetchColumn() === 'admin';
 
     if ($isAdmin) {
-        $stmt = $db->prepare('UPDATE recepten SET titel = ?, blog = ?, bijgewerkt = CURRENT_TIMESTAMP WHERE id = ?');
-        $stmt->execute([$titel, $blog, $id]);
+        $stmt = $db->prepare('UPDATE recepten SET titel = ?, blog = ?, beschrijving = ?, bereidingstijd = ?, bijgewerkt = CURRENT_TIMESTAMP WHERE id = ?');
+        $stmt->execute([$titel, $blog, $beschrijving, $bereidingstijd, $id]);
     } else {
-        $stmt = $db->prepare('UPDATE recepten SET titel = ?, blog = ?, bijgewerkt = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?');
-        $stmt->execute([$titel, $blog, $id, $_SESSION['user_id']]);
+        $stmt = $db->prepare('UPDATE recepten SET titel = ?, blog = ?, beschrijving = ?, bereidingstijd = ?, bijgewerkt = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?');
+        $stmt->execute([$titel, $blog, $beschrijving, $bereidingstijd, $id, $_SESSION['user_id']]);
     }
 
 

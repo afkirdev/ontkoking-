@@ -261,12 +261,158 @@ p {
     align-items: center;
 }
 
-#options {
-    width: 50%;
-    max-width: 360px;
-    height: 48px;
-    font-size: 16px;
-    border: none;
+.home-pagina .hero {
+    height: auto;
+    min-height: clamp(220px, 26vw, 340px);
+    padding: 32px;
+    border-radius: 20px;
+    border: 1px solid rgba(115, 65, 41, 0.3);
+    box-shadow: 0 6px 20px rgba(84, 37, 31, 0.08);
+}
+
+.recept-zoeken {
+    width: min(100%, 620px);
+    padding: 12px 16px;
+    border-radius: 16px;
+    border: 1px solid #c69a73;
+    background: rgba(255, 250, 240, 0.97);
+    box-shadow: 0 12px 36px rgba(84, 37, 31, 0.18), inset 0 0 0 3px #fff5e5;
+}
+
+.visueel-verborgen {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.zoek-basis {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.zoek-filters summary {
+    width: fit-content;
+    min-height: 44px;
+    padding: 8px 2px 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.zoek-filters summary:focus-visible {
+    outline: 3px solid #815713;
+    outline-offset: 2px;
+}
+
+.zoek-filters[open] summary {
+    margin-bottom: 8px;
+}
+
+.zoek-filters[open] {
+    margin-top: 12px;
+    padding-top: 4px;
+    border-top: 1px solid #dfc5aa;
+}
+
+.recept-zoeken .zoek-veld input,
+.recept-zoeken .zoek-veld select {
+    border: 1px solid #c69a73;
+    box-shadow: inset 0 1px 3px rgba(84, 37, 31, 0.05);
+}
+
+.recept-zoeken .zoek-veld input:hover,
+.recept-zoeken .zoek-veld select:hover {
+    border-color: #9b6650;
+}
+
+.filter-toepassen {
+    margin-top: 12px;
+}
+
+.zoek-velden {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 16px;
+}
+
+.zoek-veld {
+    min-width: 0;
+}
+
+.zoek-veld label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.zoek-veld input, .zoek-veld #options {
+    width: 100%;
+    min-height: 48px;
+}
+
+.zoek-knop {
+    min-height: 48px;
+    padding: 10px 24px;
+    border: 1px solid #942225;
+    border-radius: 8px;
+    background: #b72d30;
+    color: #fff5df;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.zoek-knop:hover {
+    background: #942225;
+}
+
+.recept-zoeken p {
+    margin-top: 14px;
+    font-size: 0.875rem;
+}
+
+.zoek-resultaten, .geen-resultaten {
+    width: calc(100% - 64px);
+    max-width: 1200px;
+    margin: 24px auto 0;
+}
+
+.zoek-resultaten {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+}
+
+.zoek-resultaten a {
+    color: #842326;
+}
+
+@media (max-width: 1000px) {
+    .zoek-velden {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .home-pagina .hero {
+        padding: 16px;
+        margin-top: 24px;
+    }
+
+    .zoek-velden {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .zoek-resultaten, .geen-resultaten {
+        width: calc(100% - 32px);
+    }
 }
 
 #minhero {
@@ -578,4 +724,161 @@ select:focus-visible, textarea:focus-visible {
     .header-link {
         font-size: 0.875rem;
     }
+}
+
+/* Een warme kookboekheader, met het merk naast het menu. */
+header.recepten-topbar {
+    height: auto;
+    min-height: 88px;
+    gap: 20px;
+    padding: 14px max(24px, calc((100% - 1200px) / 2));
+    background: linear-gradient(115deg, #7f2327, #b72d30 65%, #a72a2d);
+    border-bottom: 3px solid #dca76c;
+    box-shadow: 0 4px 16px rgba(84, 37, 31, 0.12);
+}
+
+.recepten-topbar .topbar-left {
+    gap: 18px;
+    min-width: 0;
+}
+
+.recepten-topbar .menu-button {
+    flex-shrink: 0;
+    background: #fff5df;
+    border: 1px solid #dfb987;
+    border-radius: 50%;
+}
+
+.header-identiteit {
+    min-width: 0;
+}
+
+.header-merk {
+    display: inline-block;
+    font-family: var(--font-kop);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: #fff5df;
+    text-decoration: none;
+}
+
+.header-merk span {
+    color: #f1c58d;
+}
+
+.header-slogan, .header-paginanaam {
+    margin: 5px 0 0;
+    font-family: var(--font-tekst);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: #f3d5bb;
+    text-wrap: initial;
+}
+
+.header-paginanaam {
+    overflow-wrap: anywhere;
+}
+
+.recepten-topbar > .header-link {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    border: 1px solid #e4b48b;
+    border-radius: 24px;
+    background: rgba(255, 245, 223, 0.08);
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.recepten-topbar > .header-link:hover {
+    background: rgba(255, 245, 223, 0.18);
+}
+
+.recepten-topbar .nav-menu {
+    top: calc(100% + 16px);
+}
+
+@media (max-width: 600px) {
+    header.recepten-topbar {
+        min-height: 78px;
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .recepten-topbar .topbar-left {
+        gap: 10px;
+    }
+
+    .header-slogan {
+        display: none;
+    }
+
+    .recepten-topbar > .header-link {
+        padding: 8px 12px;
+    }
+}
+
+/* De homepage: eerst het eten, daarna het zoeken. */
+body.home-pagina { background: #f5ecdd; }
+.kook-intro {
+    width: min(100% - 64px, 1200px);
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+    gap: clamp(24px, 5vw, 72px);
+}
+.kook-intro h1 {
+    font-size: clamp(2.75rem, 5.5vw, 5rem);
+    line-height: 1.03;
+    margin: 14px 0 24px;
+}
+.kook-intro-tekst > p:not(.sectie-label) { max-width: 35ch; }
+.kook-intro > img {
+    width: 100%;
+    height: clamp(280px, 32vw, 400px);
+    object-fit: cover;
+    border-radius: 4px 48px 4px 4px;
+    border: 1px solid #c69a73;
+}
+.sectie-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.13em; font-weight: 700; color: #9b292b; }
+.tekst-link { display: inline-block; color: #8c282a; font-weight: 700; text-underline-offset: 5px; }
+.kook-intro .tekst-link { margin-top: 24px; }
+.zoek-strook { width: min(100% - 64px, 1200px); margin: 32px auto; padding: 20px 0; border-block: 1px solid #d8bfa3; }
+.zoek-strook .recept-zoeken { width: min(100%, 620px); padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.home-pagina #grid1, .home-pagina #grid2 { grid-template-columns: repeat(3, minmax(0, 1fr)); text-align: left; }
+.home-pagina .grid-item h2 { font-size: 1.5rem; margin: 6px 0 8px; letter-spacing: -0.025em; }
+.home-pagina .grid-item:hover h2 { color: #9b292b; text-decoration: underline; text-underline-offset: 4px; }
+.home-pagina .grid-item .recept-meta { font-size: 0.75rem; font-weight: 700; color: #9b292b; margin-top: 14px; }
+.home-pagina .grid-item p { font-size: 0.9375rem; }
+.home-pagina .grid-item img { border-radius: 8px; }
+.account-layout { width: min(100% - 48px, 1000px); margin: 56px auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+.account-intro h2 { margin: 16px 0; }
+.account-intro img { display: block; width: 100%; height: 240px; object-fit: cover; margin-top: 24px; border-radius: 4px 32px 4px 4px; }
+.account-formulier { background: #fffaf0; padding: clamp(20px, 3vw, 32px); border: 1px solid #cfad8d; border-radius: 10px; }
+.account-formulier h2 { margin: 24px 0 12px; }
+.account-tabs { display: flex; gap: 24px; border-bottom: 1px solid #dfc5aa; }
+.account-tabs a { color: #735044; text-decoration: none; padding: 0 0 12px; }
+.account-tabs [aria-current] { border-bottom: 2px solid #9b292b; color: #9b292b; font-weight: 700; }
+.net-formulier { margin-top: 24px; }
+.net-formulier label { display: block; font-weight: 700; margin: 18px 0 6px; }
+.net-formulier input:not([type="hidden"]), .net-formulier select, .net-formulier textarea { display: block; width: 100%; min-height: 44px; }
+.net-formulier > button { width: 100%; margin-top: 24px; }
+.veld-hulp { font-size: 0.8125rem; font-weight: 400; }
+.formulier-melding { margin-top: 16px; padding: 12px; border-left: 3px solid #9b292b; background: #f7e7d7; }
+@media (max-width: 700px) {
+    .kook-intro { grid-template-columns: 1fr; margin-top: 28px; }
+    .kook-intro, .zoek-strook { width: calc(100% - 32px); }
+    .kook-intro h1 br { display: none; }
+    .kook-intro h1 { max-width: 12ch; }
+    .kook-intro > img { height: 230px; }
+    .home-pagina #grid1, .home-pagina #grid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .account-layout { grid-template-columns: 1fr; margin: 28px auto; }
+    .account-intro img { display: none; }
+}
+@media (max-width: 460px) {
+    .home-pagina #grid1, .home-pagina #grid2 { grid-template-columns: minmax(0, 1fr); }
 }

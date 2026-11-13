@@ -15,7 +15,8 @@
     <div class="content">
         <div class="card">
             <h1><?= e($recept['titel']) ?></h1>
-            <p>door <?= e($recept['gebruikersnaam']) ?></p>
+            <p>door <?= e($recept['gebruikersnaam']) ?><?= $recept['bereidingstijd'] ? ' · ' . (int)$recept['bereidingstijd'] . ' minuten' : '' ?></p>
+            <?php if ($recept['beschrijving']): ?><p><?= e($recept['beschrijving']) ?></p><?php endif; ?>
             <?php if (!empty($recept['maaltijd'])): ?>
             <p>Maaltijd: <?= e(ucfirst($recept['maaltijd'])) ?></p>
             <?php endif; ?>
@@ -23,10 +24,10 @@
             <img src="../<?= e($recept['foto']) ?>" alt="" style="width: 100%;">
             <?php endif; ?>
 
-            <h3>ingredienten</h3>
+            <h3>Ingrediënten</h3>
             <p><?= nl2br(e($recept['ingredienten'])) ?></p>
 
-            <h3>Blog</h3>
+            <h3>Bereiding</h3>
             <p><?= nl2br(e($recept['blog'])) ?></p>
 
             <?php if ($recept['foto2']): ?>

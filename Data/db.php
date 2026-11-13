@@ -1,5 +1,5 @@
 <?php
-session_start();
+if (PHP_SAPI !== 'cli') session_start();
 
 // maakt de database aan als hij nog niet bestaat
 $db = new PDO('sqlite:' . __DIR__ . '/ontkoking.db');

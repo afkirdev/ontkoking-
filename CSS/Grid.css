@@ -91,6 +91,15 @@ a.grid-item {
 
 .home-pagina .grid-item img {
     border-radius: 14px;
+    border: 1px solid rgba(115, 65, 41, 0.3);
+    box-shadow: 0 4px 14px rgba(84, 37, 31, 0.1);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-pagina .grid-item:hover img,
+.home-pagina .grid-item:focus-visible img {
+    border-color: #9b292b;
+    box-shadow: 0 6px 18px rgba(84, 37, 31, 0.17);
 }
 
 .home-pagina .grid-item:hover h5 {
