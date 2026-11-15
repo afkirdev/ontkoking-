@@ -10,11 +10,9 @@ $paginaTitel = $paginaTitel ?? 'Ontkoking';
                 <span></span>
             </button>
             <div class="header-identiteit">
-                <a class="header-merk" href="<?= $terug ?>index.php" aria-label="Ontkoking — home">Ontkoking<span aria-hidden="true">.</span></a>
+                <a class="header-merk" href="<?= $terug ?>index.php" aria-label="Ontkoking — home">Ontkoking</a>
                 <?php if ($paginaTitel !== 'Ontkoking'): ?>
                     <h1 class="header-paginanaam"><?= e($paginaTitel) ?></h1>
-                <?php else: ?>
-                    <p class="header-slogan">Een beetje inspiratie. Iets lekkers op tafel.</p>
                 <?php endif; ?>
             </div>
             <?php $menuBasis = $terug; include __DIR__ . '/menu.php'; ?>

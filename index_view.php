@@ -16,10 +16,9 @@
 
     <section class="kook-intro" aria-labelledby="intro-titel">
         <div class="kook-intro-tekst">
-            <p class="sectie-label">Het kookboek voor elke dag</p>
-            <h1 id="intro-titel">Wat eten<br>we vandaag?</h1>
-            <p>Een snelle lunch of rustig koken op zondag. Hier vind je iets voor op tafel.</p>
-            <a class="tekst-link" href="pages/Aanmakken.php">Deel je eigen recept <span aria-hidden="true">↗</span></a>
+            <h1 id="intro-titel">Recepten voor elke dag</h1>
+            <p>Zoek iets om te koken of voeg je eigen recept toe.</p>
+            <a class="tekst-link" href="pages/Aanmakken.php">Recept toevoegen</a>
         </div>
         <img src="assets/hero.png" alt="Een gedekte tafel met brood, tapas en kleine gerechten" width="890" height="500" fetchpriority="high">
     </section>

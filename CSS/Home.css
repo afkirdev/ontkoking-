@@ -1,6 +1,6 @@
 /* Warme kookboektypografie, met lokaal beschikbare lettertypes. */
 :root {
-    --font-kop: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    --font-kop: "Trebuchet MS", "Segoe UI", sans-serif;
     --font-tekst: "Trebuchet MS", "Segoe UI", sans-serif;
     --tekst: #54251f;
     --tekst-zacht: #735044;
@@ -521,13 +521,13 @@ h1, h2, h3, h4, h5, h6, .brand {
 }
 
 h1 {
-    font-size: clamp(2rem, 1.4rem + 2.5vw, 3.25rem);
-    letter-spacing: -0.035em;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    letter-spacing: normal;
 }
 
 h2 {
-    font-size: clamp(1.65rem, 1.3rem + 1.5vw, 2.4rem);
-    letter-spacing: -0.025em;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    letter-spacing: normal;
 }
 
 h3 {
@@ -617,7 +617,7 @@ select:focus-visible, textarea:focus-visible {
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: clamp(1.35rem, 1rem + 1.5vw, 2rem);
-    letter-spacing: -0.025em;
+    letter-spacing: normal;
     color: #fff5df;
 }
 
@@ -726,27 +726,27 @@ select:focus-visible, textarea:focus-visible {
     }
 }
 
-/* Een warme kookboekheader, met het merk naast het menu. */
+/* Oorspronkelijke header, met de naam naast het menu. */
 header.recepten-topbar {
-    height: auto;
-    min-height: 88px;
-    gap: 20px;
-    padding: 14px max(24px, calc((100% - 1200px) / 2));
-    background: linear-gradient(115deg, #7f2327, #b72d30 65%, #a72a2d);
-    border-bottom: 3px solid #dca76c;
-    box-shadow: 0 4px 16px rgba(84, 37, 31, 0.12);
+    height: 64px;
+    min-height: 64px;
+    gap: 16px;
+    padding: 0 28px;
+    background: #b72d30;
+    border: 0;
+    box-shadow: none;
 }
 
 .recepten-topbar .topbar-left {
-    gap: 18px;
+    gap: 14px;
     min-width: 0;
 }
 
 .recepten-topbar .menu-button {
     flex-shrink: 0;
-    background: #fff5df;
-    border: 1px solid #dfb987;
-    border-radius: 50%;
+    background: beige;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 
 .header-identiteit {
@@ -755,93 +755,66 @@ header.recepten-topbar {
 
 .header-merk {
     display: inline-block;
-    font-family: var(--font-kop);
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    font-size: clamp(1.4rem, 4vw, 1.875rem);
     font-weight: 700;
     line-height: 1.1;
-    letter-spacing: -0.04em;
     color: #fff5df;
     text-decoration: none;
 }
 
-.header-merk span {
-    color: #f1c58d;
-}
-
-.header-slogan, .header-paginanaam {
-    margin: 5px 0 0;
-    font-family: var(--font-tekst);
-    font-size: 0.8125rem;
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: 0;
-    color: #f3d5bb;
-    text-wrap: initial;
-}
-
 .header-paginanaam {
-    overflow-wrap: anywhere;
+    margin: 3px 0 0;
+    font-family: var(--font-tekst);
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #fff5df;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .recepten-topbar > .header-link {
     flex-shrink: 0;
-    padding: 8px 18px;
-    border: 1px solid #e4b48b;
-    border-radius: 24px;
-    background: rgba(255, 245, 223, 0.08);
-    text-decoration: none;
-    transition: background 0.2s ease;
-}
-
-.recepten-topbar > .header-link:hover {
-    background: rgba(255, 245, 223, 0.18);
 }
 
 .recepten-topbar .nav-menu {
-    top: calc(100% + 16px);
+    top: 46px;
 }
 
 @media (max-width: 600px) {
     header.recepten-topbar {
-        min-height: 78px;
-        padding: 12px 16px;
+        padding: 0 14px;
         gap: 12px;
     }
 
     .recepten-topbar .topbar-left {
         gap: 10px;
     }
-
-    .header-slogan {
-        display: none;
-    }
-
-    .recepten-topbar > .header-link {
-        padding: 8px 12px;
-    }
 }
 
-/* De homepage: eerst het eten, daarna het zoeken. */
-body.home-pagina { background: #f5ecdd; }
+/* Homepage */
+body.home-pagina { background: #edbf91; }
 .kook-intro {
     width: min(100% - 64px, 1200px);
     margin: 40px auto 0;
     display: grid;
     grid-template-columns: 0.85fr 1.15fr;
     align-items: center;
-    gap: clamp(24px, 5vw, 72px);
+    gap: 32px;
 }
 .kook-intro h1 {
-    font-size: clamp(2.75rem, 5.5vw, 5rem);
-    line-height: 1.03;
-    margin: 14px 0 24px;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    margin: 0 0 16px;
 }
 .kook-intro-tekst > p:not(.sectie-label) { max-width: 35ch; }
 .kook-intro > img {
     width: 100%;
-    height: clamp(280px, 32vw, 400px);
+    height: clamp(200px, 25vw, 300px);
     object-fit: cover;
-    border-radius: 4px 48px 4px 4px;
+    border-radius: 6px;
     border: 1px solid #c69a73;
 }
 .sectie-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.13em; font-weight: 700; color: #9b292b; }
@@ -850,14 +823,12 @@ body.home-pagina { background: #f5ecdd; }
 .zoek-strook { width: min(100% - 64px, 1200px); margin: 32px auto; padding: 20px 0; border-block: 1px solid #d8bfa3; }
 .zoek-strook .recept-zoeken { width: min(100%, 620px); padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
 .home-pagina #grid1, .home-pagina #grid2 { grid-template-columns: repeat(3, minmax(0, 1fr)); text-align: left; }
-.home-pagina .grid-item h2 { font-size: 1.5rem; margin: 6px 0 8px; letter-spacing: -0.025em; }
+.home-pagina .grid-item h2 { font-size: 1.5rem; margin: 6px 0 8px; letter-spacing: normal; }
 .home-pagina .grid-item:hover h2 { color: #9b292b; text-decoration: underline; text-underline-offset: 4px; }
 .home-pagina .grid-item .recept-meta { font-size: 0.75rem; font-weight: 700; color: #9b292b; margin-top: 14px; }
 .home-pagina .grid-item p { font-size: 0.9375rem; }
 .home-pagina .grid-item img { border-radius: 8px; }
-.account-layout { width: min(100% - 48px, 1000px); margin: 56px auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
-.account-intro h2 { margin: 16px 0; }
-.account-intro img { display: block; width: 100%; height: 240px; object-fit: cover; margin-top: 24px; border-radius: 4px 32px 4px 4px; }
+.account-layout { width: min(100% - 32px, 460px); margin: 40px auto; }
 .account-formulier { background: #fffaf0; padding: clamp(20px, 3vw, 32px); border: 1px solid #cfad8d; border-radius: 10px; }
 .account-formulier h2 { margin: 24px 0 12px; }
 .account-tabs { display: flex; gap: 24px; border-bottom: 1px solid #dfc5aa; }
@@ -872,12 +843,9 @@ body.home-pagina { background: #f5ecdd; }
 @media (max-width: 700px) {
     .kook-intro { grid-template-columns: 1fr; margin-top: 28px; }
     .kook-intro, .zoek-strook { width: calc(100% - 32px); }
-    .kook-intro h1 br { display: none; }
-    .kook-intro h1 { max-width: 12ch; }
     .kook-intro > img { height: 230px; }
     .home-pagina #grid1, .home-pagina #grid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .account-layout { grid-template-columns: 1fr; margin: 28px auto; }
-    .account-intro img { display: none; }
 }
 @media (max-width: 460px) {
     .home-pagina #grid1, .home-pagina #grid2 { grid-template-columns: minmax(0, 1fr); }

@@ -11,19 +11,13 @@
     <?php $terug = '../'; $paginaTitel = $registreren ? 'Registreren' : 'Inloggen'; include __DIR__ . '/../includes/Header.php'; ?>
     <main class="page-body">
         <div class="account-layout">
-            <aside class="account-intro">
-                <p class="sectie-label">Jouw eigen kookboek</p>
-                <h2>Dat ene recept?<br>Bewaar het hier.</h2>
-                <p>Deel wat je graag kookt, met je eigen foto’s en tips voor aan tafel.</p>
-                <img src="../assets/recepten/pasta.jpg" alt="Pasta met pesto en tomaat" width="1000" height="667">
-            </aside>
             <section class="account-formulier">
                 <nav class="account-tabs" aria-label="Account">
                     <a href="login.php" <?= !$registreren ? 'aria-current="page"' : '' ?>>Inloggen</a>
                     <a href="login.php?actie=registreren" <?= $registreren ? 'aria-current="page"' : '' ?>>Registreren</a>
                 </nav>
-                <h2><?= $registreren ? 'Maak een account' : 'Welkom terug' ?></h2>
-                <p><?= $registreren ? 'Een account is genoeg om je eigen recepten te plaatsen.' : 'Log in om verder te gaan met je recepten.' ?></p>
+                <h2><?= $registreren ? 'Registreren' : 'Inloggen' ?></h2>
+                <p><?= $registreren ? 'Maak een account om recepten toe te voegen.' : 'Log in om je recepten te bekijken of aan te passen.' ?></p>
                 <?php if ($melding): ?><p class="formulier-melding" role="status"><?= e($melding) ?></p><?php endif; ?>
                 <?php if ($fout): ?><p class="formulier-melding" role="alert"><?= e($fout) ?></p><?php endif; ?>
                 <form method="post" class="net-formulier">

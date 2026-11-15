@@ -6,7 +6,7 @@
     border: 1px solid #cfad8d;
     border-radius: 12px;
 }
-.recept-formulier h1 { max-width: 19ch; }
+.recept-formulier h1 { margin-bottom: 12px; }
 .recept-formulier > p { max-width: 55ch; }
 .recept-form-rij {
     display: grid;

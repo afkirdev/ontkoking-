@@ -12,15 +12,14 @@
     <?php $terug = '../'; $paginaTitel = 'Je keuken'; include __DIR__ . '/../includes/Header.php'; ?>
     <main class="page-body">
         <form class="recept-formulier" action="../Data/updateverwerk.php" method="post" enctype="multipart/form-data">
-            <p class="sectie-label">Uit jouw keuken</p>
-            <h1><?= $recept['id'] ? 'Nog een beetje bijschaven.' : 'Een goed recept is er om te delen.' ?></h1>
-            <p>Vertel wat je maakt en hoe. Een eigen foto maakt het af.</p>
+            <h1><?= $recept['id'] ? 'Recept bewerken' : 'Recept toevoegen' ?></h1>
+            <p>Vul de ingrediënten en de stappen in. Je kunt ook foto’s toevoegen.</p>
             <input type="hidden" name="id" value="<?= e($recept['id']) ?>">
             <div class="net-formulier">
                 <label for="titel">Naam van je gerecht</label>
                 <input id="titel" type="text" name="titel" maxlength="100" required placeholder="Bijvoorbeeld: oma’s tomatensoep" value="<?= e($recept['titel']) ?>">
-                <label for="beschrijving">In één zin <span class="veld-hulp">(optioneel)</span></label>
-                <input id="beschrijving" name="beschrijving" maxlength="250" value="<?= e($recept['beschrijving'] ?? '') ?>" placeholder="Wat maakt dit recept zo lekker?">
+                <label for="beschrijving">Korte beschrijving <span class="veld-hulp">(optioneel)</span></label>
+                <input id="beschrijving" name="beschrijving" maxlength="250" value="<?= e($recept['beschrijving'] ?? '') ?>" placeholder="Een korte beschrijving van het gerecht">
                 <div class="recept-form-rij">
                     <div>
                         <label for="maaltijd">Maaltijd</label>
@@ -44,7 +43,7 @@
                     </div>
                     <div>
                         <label for="blog">Zo maak je het</label>
-                        <p id="bereiding-uitleg" class="veld-hulp">Schrijf de stappen op. Zet er gerust je eigen tips bij.</p>
+                        <p id="bereiding-uitleg" class="veld-hulp">Zet elke stap op een nieuwe regel.</p>
                         <textarea id="blog" name="blog" required rows="10" aria-describedby="bereiding-uitleg" placeholder="1. Zet een pan water op…"><?= e($recept['blog']) ?></textarea>
                     </div>
                 </div>
