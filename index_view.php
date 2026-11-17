@@ -26,7 +26,8 @@
     <!--de eerste 4 recepten-->
     <div id="grid1">
         <?php foreach ($bovenste as $recept): ?>
-        <a class="grid-item" href="pages/recept.php?id=<?= $recept['id'] ?>"><img src="<?= e($recept['foto'] ?: $recept['foto2'] ?: 'assets/hero.png') ?>" alt="<?= e($recept['titel']) ?>">
+        <a class="grid-item" href="pages/recept.php?id=<?= $recept['id'] ?>">
+            <img src="<?= e($recept['foto'] ?: $recept['foto2'] ?: 'assets/hero.png') ?>" alt="<?= e($recept['titel']) ?>">
         <div><h5><?= e($recept['titel']) ?></h5></div></a>
         <?php endforeach; ?>
     </div>

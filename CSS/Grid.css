@@ -30,7 +30,19 @@
 
 /* foto's uit de database niet te groot laten worden */
 .grid-item img {
-    max-width: 100%;
+    max-width: 90%;
+    margin-left: 5%;
+    margin-top: 5%
+}
+
+.grid-item{
+    border-style: solid;
+    background-color: #b72d30;
+    border-radius: 20px;
+}
+
+.grid-item:hover{
+    scale: 1.01
 }
 
 a.grid-item {

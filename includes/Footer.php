@@ -1,3 +1,4 @@
+<?php require_once 'index.php'; ?>
 <footer class="site-footer recepten-footer">
     <div class="footer-inhoud">
         <div class="footer-intro">
@@ -13,7 +14,7 @@
         <div class="footer-maaltijden">
             <h2 class="footer-kop">Voor elk moment</h2>
             <ul aria-label="Maaltijden">
-                <li>Ontbijt</li>
+                <li >Ontbijt</li>
                 <li>Lunch</li>
                 <li>Avondeten</li>
             </ul>
