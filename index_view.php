@@ -21,6 +21,11 @@
             <option value="Lunch" <?= $filter == 'Lunch' ? 'selected' : '' ?>>Lunch</option>
             <option value="Avondeten" <?= $filter == 'Avondeten' ? 'selected' : '' ?>>Avondeten</option>
         </select>
+        <form method="get">
+            <input type="hidden" name="filter" value="<?= e($filter) ?>">
+            <input type="text" name="zoek" placeholder="Zoek een recept..." value="<?= e($zoek) ?>">
+            <input type="submit" value="Zoeken">
+        </form>
     </div>
 
     <!--de eerste 4 recepten-->

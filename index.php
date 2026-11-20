@@ -15,6 +15,21 @@ if ($filter != '') {
     $recepten = $db->query('SELECT * FROM recepten ORDER BY id DESC')->fetchAll();
 }
 
+$zoek = $_GET['zoek'] ?? '';
+if ($zoek != '') {
+    $gevonden = [];
+    foreach ($recepten as $recept) {
+        $stmt = $db->prepare('SELECT ingredienten.naam FROM recept_ingredienten INNER JOIN ingredienten ON ingredienten.id = recept_ingredienten.ingredient_id WHERE recept_ingredienten.recept_id = ?');
+        $stmt->execute([$recept['id']]);
+        $ingredienten = implode(' ', $stmt->fetchAll(PDO::FETCH_COLUMN));
+
+        if (stripos($recept['titel'] . ' ' . $ingredienten, $zoek) !== false) {
+            $gevonden[] = $recept;
+        }
+    }
+    $recepten = $gevonden;
+}
+
 $bovenste = array_slice($recepten, 0, 4);
 $rest = array_slice($recepten, 4);
 

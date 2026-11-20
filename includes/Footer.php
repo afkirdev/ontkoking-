@@ -1,4 +1,3 @@
-<?php require_once 'index.php'; ?>
 <footer class="site-footer recepten-footer">
     <div class="footer-inhoud">
         <div class="footer-intro">
