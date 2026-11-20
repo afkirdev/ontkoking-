@@ -248,7 +248,7 @@ p {
 }
 
 .hero {
-    background-image: url("/assets/hero.webp");
+    background-image: url("/assets/Hero.webp");
     opacity: 90%;
     background-size: cover;
     background-position: center;
